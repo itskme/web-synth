@@ -1,4 +1,3 @@
-// i used AI for the notes. I aint gonna do this myself!
 const notes = [
     { key: 'a', note: 'C4', frequency: 261.63 },
     { key: 'w', note: 'C#4', frequency: 277.18 },
@@ -41,10 +40,12 @@ gainNode.connect(audioContext.destination);
 
 const keyboardContainer = document.getElementById('keyboard');
 const waveTypeButton = document.getElementById('wave-type-button');
+const pitchShiftBox = document.getElementById('pitch-shift-box');
 
 let currentWaveType = 'square';
 let waveTypes = ['sine', 'square', 'sawtooth', 'triangle'];
 let currentWaveTypeIndex = 0;
+let pitchShift = 0;
 
 notes.forEach((note) => {
     const key = document.createElement('div');
@@ -74,10 +75,12 @@ function playNote(frequency) {
     if (!oscillators[frequency]) {
         const oscillator = audioContext.createOscillator();
         oscillator.type = currentWaveType;
-        oscillator.frequency.value = frequency;
+        oscillator.frequency.value = frequency + pitchShift;
         oscillator.connect(gainNode);
         oscillator.start();
         oscillators[frequency] = oscillator;
+    } else {
+        oscillators[frequency].frequency.value = frequency + pitchShift;
     }
 }
 
@@ -92,4 +95,21 @@ waveTypeButton.addEventListener('click', () => {
     currentWaveTypeIndex = (currentWaveTypeIndex + 1) % waveTypes.length;
     currentWaveType = waveTypes[currentWaveTypeIndex];
     waveTypeButton.textContent = `Wave Type: ${currentWaveType}`;
+});
+
+pitchShiftBox.addEventListener('mousemove', (event) => {
+    const rect = pitchShiftBox.getBoundingClientRect();
+    const mouseY = event.clientY - rect.top;
+    const height = rect.height;
+    pitchShift = (mouseY / height) * 100 - 50;
+    Object.values(oscillators).forEach((oscillator) => {
+        oscillator.frequency.value = oscillator.frequency.value - pitchShift;
+    });
+});
+
+pitchShiftBox.addEventListener('mouseleave', () => {
+    pitchShift = 0;
+    Object.values(oscillators).forEach((oscillator) => {
+        oscillator.frequency.value = oscillator.frequency.value - pitchShift;
+    });
 });
