@@ -30,6 +30,13 @@ const notes = [
     { key: '8', note: 'E6', frequency: 1318.51 },
     { key: '9', note: 'F6', frequency: 1396.91 },
     { key: '0', note: 'F#6', frequency: 1479.98 },
+    { key: 'z', note: '1', frequency: 60 },
+    { key: 'x', note: '2', frequency: 80 },
+    { key: 'c', note: '3', frequency: 100 },
+    { key: 'v', note: '4', frequency: 120 },
+    { key: 'b', note: '5', frequency: 140 },
+    { key: 'n', note: '6', frequency: 160 },
+    { key: 'm', note: '7', frequency: 180 },
 ];
 
 const audioContext = new AudioContext();
@@ -47,18 +54,34 @@ let waveTypes = ['sine', 'square', 'sawtooth', 'triangle'];
 let currentWaveTypeIndex = 0;
 let pitchShift = 0;
 
+const drumSamples = {};
+
+notes.forEach((note) => {
+    if (note.note.match(/^\d+$/)) {
+        drumSamples[note.note] = `${note.note}.wav`;
+    }
+});
+
 notes.forEach((note) => {
     const key = document.createElement('div');
     key.className = 'key';
     key.textContent = note.key.toUpperCase();
-    key.addEventListener('click', () => playNote(note.frequency));
+    if (note.note in drumSamples) {
+        key.addEventListener('click', () => playDrum(note.note));
+    } else {
+        key.addEventListener('click', () => playNote(note.frequency));
+    }
     keyboardContainer.appendChild(key);
 });
 
 document.addEventListener('keydown', (event) => {
     const note = notes.find((note) => note.key === event.key);
     if (note) {
-        playNote(note.frequency);
+        if (note.note in drumSamples) {
+            playDrum(note.note);
+        } else {
+            playNote(note.frequency);
+        }
     }
 });
 
@@ -89,6 +112,11 @@ function stopNote(frequency) {
         oscillators[frequency].stop();
         delete oscillators[frequency];
     }
+}
+
+function playDrum(note) {
+    const audio = new Audio(drumSamples[note]);
+    audio.play();
 }
 
 waveTypeButton.addEventListener('click', () => {
