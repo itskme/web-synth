@@ -1,6 +1,9 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #keyboard {
@@ -38,4 +41,33 @@ body {
             border: none;
             padding: 10px;
             cursor: pointer;
+        }
+
+        #wave-type-menu {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background-color: #f0f0f0;
+            border: 1px solid black;
+            padding: 10px;
+            display: none;
+        }
+
+        #wave-type-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #wave-type-menu li {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #wave-type-menu li:hover {
+            background-color: #ccc;
+        }
+
+        .hidden {
+            display: none;
         }
