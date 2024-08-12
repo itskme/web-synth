@@ -35,3 +35,47 @@ const notes = [
 
 const audioContext = new AudioContext();
 
+const gainNode = audioContext.createGain();
+gainNode.gain.value = 0.5;
+gainNode.connect(audioContext.destination);
+
+const keyboardContainer = document.getElementById('keyboard');
+
+
+notes.forEach((note) => {
+    const key = document.createElement('div');
+    key.className = 'key';
+    key.textContent = note.key.toUpperCase();
+    key.addEventListener('click', () => playNote(note.frequency));
+    keyboardContainer.appendChild(key);
+});
+
+document.addEventListener('keydown', (event) => {
+    const note = notes.find((note) => note.key === event.key);
+    if (note) {
+        playNote(note.frequency);
+    }
+});
+
+
+document.addEventListener('keyup', (event) => {
+    const note = notes.find((note) => note.key === event.key);
+    if (note) {
+        stopNote(note.frequency);
+    }
+});
+
+const oscillators = {};
+
+
+function playNote(frequency) {
+
+    if (!oscillators[frequency]) {
+        const oscillator = audioContext.createOscillator();
+        oscillator.type = 'square';
+        oscillator.frequency.value = frequency;
+        oscillator.connect(gainNode);
+        oscillator.start();
+        oscillators[frequency] = oscillator;
+    }
+}
