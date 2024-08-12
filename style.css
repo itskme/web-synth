@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.key {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.key:hover {
+    background-color: #aaa;
+}
+
+.key:active {
+    background-color: #888;
+}
+
+ #wave-type-button {
+            position: relative;
+            top: 10px;
+            left: 10px;
+            background-color: #f0f0f0;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }

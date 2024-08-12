@@ -1,4 +1,4 @@
-//i used AI for drfining the notes. I aint gonna do this myself!
+// i used AI for the notes. I aint gonna do this myself!
 const notes = [
     { key: 'a', note: 'C4', frequency: 261.63 },
     { key: 'w', note: 'C#4', frequency: 277.18 },
@@ -40,7 +40,11 @@ gainNode.gain.value = 0.5;
 gainNode.connect(audioContext.destination);
 
 const keyboardContainer = document.getElementById('keyboard');
+const waveTypeButton = document.getElementById('wave-type-button');
 
+let currentWaveType = 'square';
+let waveTypes = ['sine', 'square', 'sawtooth', 'triangle'];
+let currentWaveTypeIndex = 0;
 
 notes.forEach((note) => {
     const key = document.createElement('div');
@@ -57,7 +61,6 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-
 document.addEventListener('keyup', (event) => {
     const note = notes.find((note) => note.key === event.key);
     if (note) {
@@ -67,15 +70,26 @@ document.addEventListener('keyup', (event) => {
 
 const oscillators = {};
 
-
 function playNote(frequency) {
-
     if (!oscillators[frequency]) {
         const oscillator = audioContext.createOscillator();
-        oscillator.type = 'square';
+        oscillator.type = currentWaveType;
         oscillator.frequency.value = frequency;
         oscillator.connect(gainNode);
         oscillator.start();
         oscillators[frequency] = oscillator;
     }
 }
+
+function stopNote(frequency) {
+    if (oscillators[frequency]) {
+        oscillators[frequency].stop();
+        delete oscillators[frequency];
+    }
+}
+
+waveTypeButton.addEventListener('click', () => {
+    currentWaveTypeIndex = (currentWaveTypeIndex + 1) % waveTypes.length;
+    currentWaveType = waveTypes[currentWaveTypeIndex];
+    waveTypeButton.textContent = `Wave Type: ${currentWaveType}`;
+});
