@@ -1,39 +1,13 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    max-width: 600px;
+    max-width: 670px;
     margin-left: auto;
     margin-right: auto;
 }
 
-#keyboard {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
-}
 
-.key {
-    width: 50px;
-    height: 50px;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.key:hover {
-    background-color: #aaa;
-}
-
-.key:active {
-    background-color: #888;
-}
-
- #wave-type-button {
+#wave-type-button {
             position: relative;
             background-color: #f0f0f0;
             border: none;
@@ -85,4 +59,43 @@ body {
 p {
     padding-top: 90px;
     cursor: default;
+}
+
+.key {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+}
+
+.row {
+    text-align: center;
+}
+
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.key.active {
+    background: rgb(189, 8, 8);
 }
