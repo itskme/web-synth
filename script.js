@@ -149,3 +149,83 @@ pitchShiftBox.addEventListener('mouseleave', () => {
         oscillator.frequency.value = oscillator.frequency.value - pitchShift;
     });
 });
+
+
+const destination = audioContext.createMediaStreamDestination();
+gainNode.connect(destination);
+const mediaStream = destination.stream;
+
+
+const mediaRecorder = new MediaRecorder(mediaStream);
+
+
+const recordedBlobs = [];
+
+
+const recordButton = document.getElementById('record-button');
+
+
+const clearButton = document.getElementById('clear-button');
+
+
+let isRecording = false;
+
+
+recordButton.addEventListener('click', () => {
+    if (isRecording) {
+        mediaRecorder.stop();
+        console.log('Recording stopped');
+        isRecording = false;
+        recordButton.textContent = 'Record';
+    } else {
+        mediaRecorder.start();
+        console.log('Recording started');
+        isRecording = true;
+        recordButton.textContent = 'Stop';
+    }
+});
+
+
+clearButton.addEventListener('click', () => {
+    recordedBlobs.length = 0;
+    console.log('Recording cleared');
+});
+
+
+mediaRecorder.ondataavailable = (event) => {
+    if (event.data && event.data.size > 0) {
+        recordedBlobs.push(event.data);
+    }
+};
+
+mediaRecorder.onstop = () => {
+    console.log('Recording stopped');
+};
+
+
+function playRecording() {
+    if (recordedBlobs.length > 0) {
+        const audioBlob = new Blob(recordedBlobs, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.loop = true;
+        audio.play();
+    } else {
+       
+        const audioContext = new AudioContext();
+        const oscillator = audioContext.createOscillator();
+        oscillator.type = 'sine';
+        oscillator.frequency.value = 0; 
+        oscillator.connect(audioContext.destination);
+        oscillator.start();
+        oscillator.loop = true;
+    }
+}
+
+
+const playButton = document.getElementById('play-button');
+
+
+playButton.addEventListener('click', () => {
+    playRecording();
+});
