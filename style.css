@@ -4,18 +4,26 @@ body {
     max-width: 670px;
     margin-left: auto;
     margin-right: auto;
+    background-image: url('branding-back.png');
 }
 
 
 #wave-type-button {
             position: relative;
-            background-color: #f0f0f0;
-            border: none;
-            padding: 10px;
             cursor: pointer;
             margin-left: auto;
             margin-right: auto;
             margin-top: 30px;
+            background-color: rgb(26, 25, 25);
+            padding: 20px;
+            padding-top: 35px;
+            padding-bottom: 35px;
+            border-radius: 20px;
+            border: rgb(0, 230, 57) 2px solid;
+            box-shadow: 10px 10px 5px rgb(93, 231, 0);
+            color: lime;
+            width: 200px; 
+            outline-width: 0;
         }
 
         #wave-type-menu {
@@ -53,11 +61,16 @@ body {
     background-color: #ccc;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 50px;
+    margin-top: 20px;
+    background-color: rgb(26, 25, 25);
+    border-radius: 20px;
+    border: rgb(0, 230, 57) 2px solid;
+    box-shadow: 10px 10px 5px rgb(93, 231, 0);
+    color: lime;
 }
 
 p {
-    padding-top: 90px;
+    padding-top: 75px;
     cursor: default;
 }
 
@@ -88,6 +101,13 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: rgb(26, 25, 25);
+    padding: 20px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    border-radius: 20px;
+    border: rgb(0, 230, 57) 2px solid;
+    box-shadow: 10px 10px 5px rgb(93, 231, 0);
 }
 
 .row {
@@ -97,5 +117,19 @@ p {
 }
 
 .key.active {
-    background: rgb(189, 8, 8);
+    background: lime;
+    color: black;
 }
+
+h1 {
+    background-color: rgb(26, 25, 25);
+    padding: 20px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    border-radius: 20px;
+    border: rgb(0, 230, 57) 2px solid;
+    box-shadow: 10px 10px 5px rgb(93, 231, 0);
+    color: lime;
+}
+
+
